@@ -1,2 +1,2 @@
 # guest-portal
-This is a guest captive portal for an Aruba Instant AP. It was created to test social engineering tactics to exploit vulnerabilites to users that connect to the public facing network. It is purely for testing reasons and is not designed to be used legitmatley.
+This is a guest captive portal designed for an Aruba Instant AP. It was developed to test social engineering tactics and identify vulnerabilities that may affect users connecting to a public-facing network. This project is intended solely for educational and testing purposes and should not be used for legitimate or production environments.
