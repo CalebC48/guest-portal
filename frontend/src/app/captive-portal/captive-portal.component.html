@@ -1,0 +1,187 @@
+<div class="portal-container">
+  <div class="portal-card">
+    <div class="header">
+      <div class="wifi-icon">
+        <svg
+          width="64"
+          height="64"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+          <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+          <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+          <line x1="12" y1="20" x2="12.01" y2="20"></line>
+        </svg>
+      </div>
+      <h1>WiFi Network Access</h1>
+      <p class="subtitle">Complete setup to connect to the network</p>
+    </div>
+
+    <div class="content" [ngClass]="{ 'step-complete': downloadComplete }">
+      <!-- Step 1 -->
+      <div
+        class="step"
+        [ngClass]="{ active: !downloadComplete, completed: downloadComplete }"
+      >
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h2>Download Network Profile</h2>
+          <p>
+            Select your operating system and download the configuration profile
+          </p>
+
+          <div class="os-buttons">
+            <button
+              class="os-button"
+              [ngClass]="{ selected: selectedOS === 'windows' }"
+              (click)="selectOS('windows')"
+              [disabled]="downloadComplete"
+            >
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"
+                ></path>
+              </svg>
+              <span>Windows</span>
+            </button>
+
+            <button
+              class="os-button"
+              [ngClass]="{ selected: selectedOS === 'linux' }"
+              (click)="selectOS('linux')"
+              [disabled]="downloadComplete"
+            >
+              <svg
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path
+                  d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.835-.41 1.719-.287 2.607.123.888.535 1.759 1.154 2.407.619.648 1.486 1.084 2.449 1.154.963.07 1.902-.215 2.607-.619.705-.404 1.154-.963 1.154-.963l.287-.206s.07.825.287 1.462c.217.637.619 1.092 1.154 1.359.535.267 1.277.41 2.133.206.856-.204 1.718-.619 2.442-1.359.724-.74 1.267-1.698 1.359-2.699.092-1.001-.535-2.023-1.359-2.699-.824-.676-1.698-1.236-2.699-1.359-1.001-.123-2.023.287-2.699 1.154-.676.867-1.092 1.903-1.092 2.699 0 .796.287 1.154.619 1.462.332.308.619.535.619.825 0 .29-.206.535-.619.535-.413 0-.825-.206-1.154-.619-.329-.413-.619-.996-.619-1.698 0-.702.206-1.462.619-2.133.413-.671.996-1.277 1.698-1.698.702-.421 1.462-.619 2.133-.619.671 0 1.236.123 1.698.287.462.164.825.41 1.154.825.329.415.535.996.535 1.698 0 .702-.206 1.462-.619 2.133-.413.671-.996 1.277-1.698 1.698-.702.421-1.462.619-2.133.619-.671 0-1.236-.123-1.698-.287-.462-.164-.825-.41-1.154-.825-.329-.415-.535-.996-.535-1.698 0-.702.206-1.462.619-2.133.413-.671.996-1.277 1.698-1.698.702-.421 1.462-.619 2.133-.619z"
+                ></path>
+              </svg>
+              <span>Linux</span>
+            </button>
+          </div>
+
+          <button
+            class="download-button"
+            [disabled]="!selectedOS || downloadComplete"
+            (click)="downloadProfile()"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            {{ selectedOS ? "Download Profile" : "Select OS First" }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div
+        class="step"
+        [ngClass]="{
+          active: downloadComplete && !verified,
+          completed: verified
+        }"
+      >
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h2>Execute Configuration</h2>
+          <p>
+            Run the downloaded profile file to configure your network settings
+          </p>
+
+          <div class="instructions" *ngIf="selectedOS === 'windows'">
+            <div class="instruction-item">
+              <span class="instruction-icon">📁</span
+              ><span>Locate the downloaded file in your Downloads folder</span>
+            </div>
+            <div class="instruction-item">
+              <span class="instruction-icon">🖱️</span
+              ><span>Right-click and select "Run as Administrator"</span>
+            </div>
+            <div class="instruction-item">
+              <span class="instruction-icon">✓</span
+              ><span>Follow the on-screen prompts to complete setup</span>
+            </div>
+          </div>
+
+          <div class="instructions" *ngIf="selectedOS === 'linux'">
+            <div class="instruction-item">
+              <span class="instruction-icon">💻</span
+              ><span>Open terminal in your Downloads folder</span>
+            </div>
+            <div class="instruction-item">
+              <span class="instruction-icon">⚙️</span
+              ><span>Run: chmod +x wifi-profile.sh</span>
+            </div>
+            <div class="instruction-item">
+              <span class="instruction-icon">▶️</span
+              ><span>Execute: sudo ./wifi-profile.sh</span>
+            </div>
+          </div>
+
+          <button
+            class="verify-button"
+            [disabled]="!downloadComplete || verified"
+            (click)="verifySetup()"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            {{ verified ? "Verified!" : "I Have Executed the Profile" }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="success-message" *ngIf="verified">
+      <div class="success-icon">
+        <svg
+          width="48"
+          height="48"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+      </div>
+      <h2>Setup Complete!</h2>
+      <p>You are now connected to the network. You may close this window.</p>
+    </div>
+
+    <div class="footer">
+      <p>Need help? Contact your network administrator</p>
+    </div>
+  </div>
+</div>
