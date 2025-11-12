@@ -5,9 +5,12 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:github": "ng build --configuration=github-pages",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:frontend": "node dist/frontend/server/server.mjs"
+    "serve:ssr:frontend": "node dist/frontend/server/server.mjs",
+    "copy-404": "node -e \"const fs=require('fs');const path='dist/frontend/browser';fs.copyFileSync('public/404.html',path+'/404.html');if(fs.existsSync(path+'/index.csr.html')){fs.copyFileSync(path+'/index.csr.html',path+'/index.html');}\"",
+    "deploy:github": "npm run build:github && npm run copy-404"
   },
   "private": true,
   "dependencies": {
